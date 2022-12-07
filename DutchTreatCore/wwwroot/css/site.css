@@ -59,3 +59,12 @@ ul.product-props li{
 #loginToggle {
     cursor: pointer;    
 }
+menu li {
+    display: inline;
+}
+ menu li:after {
+     content: "  |";
+ }
+ menu li:last-of-type:after {
+     content: "";
+ }
