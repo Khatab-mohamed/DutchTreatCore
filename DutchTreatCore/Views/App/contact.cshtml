@@ -3,6 +3,11 @@
     ViewBag.Title = "Contact Us";
 }
 
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/src/jquery.validate.unobtrusive.js"></script>
+}
+
 <form method="post">
     <div asp-validation-summary="ModelOnly"></div>
     <br />
@@ -28,6 +33,3 @@
     <br />
     <input type="submit" value="Send Message" />
 </form>
-
-<di>@ViewBag.UserMessage</di>
- 
