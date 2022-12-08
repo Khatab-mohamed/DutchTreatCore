@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\_Layout.cshtml" />
     <Content Remove="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\_Layout.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
 

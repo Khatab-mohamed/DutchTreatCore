@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DutchTreatCore.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +11,8 @@ namespace DutchTreatCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IMailService, NullMailService>();
+            // Support for real mail service
             services.AddMvc();
         }
 
@@ -18,6 +21,8 @@ namespace DutchTreatCore
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+            else
+                app.UseExceptionHandler("/error");
 
             app.UseMvc(config =>
                 config.MapRoute("Default",
