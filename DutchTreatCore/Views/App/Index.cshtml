@@ -2,62 +2,64 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="products-info">
-    <img src="~/img/VanGogh.jpg" alt=""/>
-    <h3>Mug</h3>
-    <ul class="product-props">
-        <li>Price: $9.99</li>
-        <li>Artist: Van Gogh</li>
-        <li>Title:</li>
-        <li>Description: Self-portrait</li>
-    </ul>
-    <button id="buyButton">By</button>
-</div>
-<div id="theForm">
-    <form>
-        <br/>
-        <label>User Name:</label>
-        <br/>
-        <input type="text"/>
-        <br/>
-        <label>Email:</label>
-        <br/>
-        <input type="email"/>
-        <br/>
-        <label>Subject:</label>
-        <br/>
-        <input type="text"/>
-        <br/>
-        <label>Message:</label>
-        <br/>
-        <textarea rows="4"></textarea>
-        <br/>
-        <input type="submit" value="Send Message"/>
-    </form>
-</div>
-<div>
-    <div id="loginToggle">login</div>
-    <form class="popup-form">
-        <div>
-            <label>User Name</label>
-            <input/>
-        </div>
-        <div>
-            <label>Password</label>
-            <input type="password"/>
-        </div>
-        <div>
-            <input type="checkbox"/>
-            <label>Remember Me?</label>
-        </div>
-        <br />
-        <div>
-            <label>Massage</label>
-            <textarea rows="4">
+<div class="col-md-6">
+    <div class="products-info">
+        <img src="~/img/VanGogh.jpg" alt=""/>
+        <h3>Mug</h3>
+        <ul class="product-props">
+            <li>Price: $9.99</li>
+            <li>Artist: Van Gogh</li>
+            <li>Title:</li>
+            <li>Description: Self-portrait</li>
+        </ul>
+        <button id="buyButton" class="btn btn-success">By</button>
+    </div>
+    <div id="theForm">
+        <form>
+            <br/>
+            <label>User Name:</label>
+            <br/>
+            <input type="text"/>
+            <br/>
+            <label>Email:</label>
+            <br/>
+            <input type="email"/>
+            <br/>
+            <label>Subject:</label>
+            <br/>
+            <input type="text"/>
+            <br/>
+            <label>Message:</label>
+            <br/>
+            <textarea rows="4"></textarea>
+            <br/>
+            <input type="submit" value="Send Message"/>
+        </form>
+    </div>
+    <div>
+        <div id="loginToggle">login</div>
+        <form class="popup-form">
+            <div>
+                <label>User Name</label>
+                <input/>
+            </div>
+            <div>
+                <label>Password</label>
+                <input type="password"/>
+            </div>
+            <div>
+                <input type="checkbox"/>
+                <label>Remember Me?</label>
+            </div>
+            <br />
+            <div>
+                <label>Massage</label>
+                <textarea rows="4">
             </textarea>
-        </div>
-        <div>
-            <input type="submit" value="Send Massage"/>
-        </div>
-    </form>
+            </div>
+            <div>
+                <input type="submit" value="login"/>
+            </div>
+        </form>
+    </div>
 </div>
