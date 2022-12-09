@@ -1,5 +1,5 @@
 ﻿
-/*body {
+body {
     font-family: sans-serif;
 }
 input,textarea{
@@ -27,9 +27,11 @@ label {
     margin: 2px;
     width: 450px;
     background-color: lightgray;
+    -ms-border-radius: 5px;
     border-radius: 5px;
 }
-ul .product-props {
+
+     ul .product-props {
     font-size: small;
 }
 
@@ -66,6 +68,3 @@ menu li {
  menu li:after {
      content: "  |";
  }
- menu li:last-of-type:after {
-     content: "";
- }*/
