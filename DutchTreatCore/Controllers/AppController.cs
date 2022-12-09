@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DutchTreatCore.Data;
+using DutchTreatCore.Repositories;
 using DutchTreatCore.Services;
 using DutchTreatCore.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -11,19 +12,20 @@ namespace DutchTreatCore.Controllers
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
-        private readonly DutchContext _context;
+        private readonly IProductsRepository _repository;
 
 
-        public AppController(IMailService mailService, DutchContext context)
+        public AppController(IMailService mailService, IProductsRepository repository)
         {
             _mailService = mailService;
-            _context = context;
+            _repository = repository;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
         public IActionResult Contact()
         {
             return View();
@@ -33,10 +35,12 @@ namespace DutchTreatCore.Controllers
         public IActionResult Contact(ContactViewModel model)
         {
             if (!ModelState.IsValid) return View();
-            _mailService.SendMessage("khatapit@gmail.com",model.Subject,$"From {model.Name} - {model.Email}, Message:{model.Message}");
+            _mailService.SendMessage("khatapit@gmail.com", model.Subject,
+                $"From {model.Name} - {model.Email}, Message:{model.Message}");
             ModelState.Clear();
             return View();
         }
+
         public IActionResult About()
         {
             ViewBag.Title = "About";
@@ -45,7 +49,7 @@ namespace DutchTreatCore.Controllers
 
         public IActionResult Shop()
         {
-            var results = _context.Products.ToList().OrderBy(p => p.Category);
+            var results = _repository.GetAllProducts();
             return View(results);
         }
     }

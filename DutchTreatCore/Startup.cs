@@ -1,4 +1,5 @@
 ﻿using DutchTreatCore.Data;
+using DutchTreatCore.Repositories;
 using DutchTreatCore.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,8 @@ namespace DutchTreatCore
         {
             services.AddTransient<IMailService, NullMailService>();
             services.AddTransient<DutchSeeder>();
+            services.AddScoped<IProductsRepository, ProductsRepository>();
+            
             // Support for real mail service
             services.AddMvc();
             services.AddDbContext<DutchContext>(cfg =>
