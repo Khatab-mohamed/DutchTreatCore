@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace DutchTreatCore
 {
@@ -25,9 +26,10 @@ namespace DutchTreatCore
             services.AddTransient<IMailService, NullMailService>();
             services.AddTransient<DutchSeeder>();
             services.AddScoped<IProductsRepository, ProductsRepository>();
+            services.AddScoped<IOrdersRepository, OrdersRepository>();
             
             // Support for real mail service
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =  ReferenceLoopHandling.Ignore);
             services.AddDbContext<DutchContext>(cfg =>
                 cfg.UseSqlServer(_config.GetConnectionString("DefaultConnectionString")));
         }
