@@ -29,10 +29,13 @@ namespace DutchTreatCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //  Authentication
             services.AddIdentity<StoreUser, IdentityRole>(cfg=>
             {
                 cfg.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<DutchContext>();
+
+            services.AddAuthentication().AddCookie().AddJwtBearer();
 
 
             services.AddTransient<IMailService, NullMailService>();

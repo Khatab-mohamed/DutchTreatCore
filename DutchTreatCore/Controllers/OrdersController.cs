@@ -4,11 +4,14 @@ using AutoMapper;
 using DutchTreatCore.Data.Entities;
 using DutchTreatCore.Repositories;
 using DutchTreatCore.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DutchTreatCore.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class OrdersController : Controller
     {
         private readonly IOrdersRepository _repository;
