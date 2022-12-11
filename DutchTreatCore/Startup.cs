@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using DutchTreatCore.Data;
+using DutchTreatCore.Data.Entities;
 using DutchTreatCore.Repositories;
 using DutchTreatCore.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +26,12 @@ namespace DutchTreatCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<StoreUser, IdentityRole>(cfg=>
+            {
+                cfg.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<DutchContext>();
+
+
             services.AddTransient<IMailService, NullMailService>();
             services.AddTransient<DutchSeeder>();
             services.AddScoped<IProductsRepository, ProductsRepository>();
@@ -44,6 +52,8 @@ namespace DutchTreatCore
                 app.UseDeveloperExceptionPage();
             else
                 app.UseExceptionHandler("/error");
+ 
+            app.UseAuthentication();
 
             app.UseMvc(config =>
                 config.MapRoute("Default",
@@ -54,8 +64,8 @@ namespace DutchTreatCore
                 // Seed the DataBase
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
-                    seeder.Seed();
+                    var seeder =  scope.ServiceProvider.GetService<DutchSeeder>();
+                    seeder.Seed().Wait();
                 }
             }
             app.UseDefaultFiles();
