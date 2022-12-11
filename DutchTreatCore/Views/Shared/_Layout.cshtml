@@ -28,6 +28,20 @@
                 <li>
                     <a asp-controller="App" asp-action="Shop">Shop</a>
                 </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <li>
+                        <a asp-controller="Account" asp-action="Logout">Log Out</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a asp-controller="Account" asp-action="Login">Login</a>
+                    </li>
+
+                }
 
             </ul>
         </div>
