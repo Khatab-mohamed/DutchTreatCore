@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using DutchTreatCore.Data.Entities;
 using DutchTreatCore.Repositories;
 using DutchTreatCore.ViewModels;
@@ -10,17 +12,18 @@ namespace DutchTreatCore.Controllers
     public class OrdersController : Controller
     {
         private readonly IOrdersRepository _repository;
+        private readonly IMapper _mapper;
 
-        public OrdersController(IOrdersRepository ordersRepository)
+        public OrdersController(IOrdersRepository ordersRepository,IMapper mapper)
         {
             _repository = ordersRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            var products = _repository.GetAllOrders();
-            return Ok(products);
+            return Ok(_mapper.Map<IEnumerable<Order>,IEnumerable<OrderViewModel>>(_repository.GetAllOrders()));
         }
 
         [HttpGet("{id:int}")]
@@ -29,35 +32,23 @@ namespace DutchTreatCore.Controllers
             var order = _repository.GetOrderById(id);
             if (order == null)
                 return NotFound();
-            else
-                return Ok(order);
+            return Ok(order);
         }
 
         [HttpPost]
-        public IActionResult Post(OrderViewModel order)
+        public IActionResult Post([FromBody] OrderViewModel order)
         {
             if (ModelState.IsValid)
             {
-                var newOrder = new Order
-                {
-                    OrderDate = order.OrderDate,
-                    OrderNumber = order.OrderNumber,
-                    Id = order.OrderId
-                };
+                var newOrder = _mapper.Map< OrderViewModel, Order>(order);
 
                 if (newOrder.OrderDate==DateTime.MinValue)
                     newOrder.OrderDate = DateTime.Now;
 
                 _repository.AddOrder(newOrder );
                
-                var orderViewModel = new OrderViewModel
-                {
-                    OrderId = newOrder.Id,
-                    OrderDate = newOrder.OrderDate,
-                    OrderNumber = newOrder.OrderNumber
-                };
-
-                return Created($"/api/orders/{orderViewModel.OrderId}", orderViewModel);
+            
+                return Created($"/api/orders/{newOrder.Id}", _mapper.Map< Order, OrderViewModel>(newOrder));
             }
 
             return null;

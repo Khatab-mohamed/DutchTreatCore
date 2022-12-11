@@ -1,4 +1,5 @@
-﻿using DutchTreatCore.Data;
+﻿using AutoMapper;
+using DutchTreatCore.Data;
 using DutchTreatCore.Repositories;
 using DutchTreatCore.Services;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,8 @@ namespace DutchTreatCore
             services.AddMvc().AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling =  ReferenceLoopHandling.Ignore);
             services.AddDbContext<DutchContext>(cfg =>
                 cfg.UseSqlServer(_config.GetConnectionString("DefaultConnectionString")));
+
+            services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using DutchTreatCore.Data;
 using DutchTreatCore.Repositories;
 using DutchTreatCore.Services;
 using DutchTreatCore.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,6 +49,7 @@ namespace DutchTreatCore.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Shop()
         {
             var results = _repository.GetAllProducts();
