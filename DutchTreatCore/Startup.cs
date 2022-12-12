@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Text;
+using AutoMapper;
 using DutchTreatCore.Data;
 using DutchTreatCore.Data.Entities;
 using DutchTreatCore.Repositories;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace DutchTreatCore
@@ -35,8 +37,16 @@ namespace DutchTreatCore
                 cfg.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<DutchContext>();
 
-            services.AddAuthentication().AddCookie().AddJwtBearer();
-
+            // cookie auth and token auth
+            services.AddAuthentication().AddCookie().AddJwtBearer(
+                cfg =>
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = _config["Tokens:Issuer"],
+                        ValidAudience = _config["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]))
+                    }
+            );
 
             services.AddTransient<IMailService, NullMailService>();
             services.AddTransient<DutchSeeder>();

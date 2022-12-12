@@ -29,5 +29,14 @@ namespace DutchTreatCore.Repositories
             _context.Add(order);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Order> GetAllOrdersByUser(string userName)
+        {
+            return _context.Orders
+                .Include(o => o.Items)
+                .Where(o=>o.User.UserName == userName)
+                .ToList();
+            ;
+        }
     }
 }

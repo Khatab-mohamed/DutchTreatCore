@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using DutchTreatCore.Data.Entities;
-using DutchTreatCore.ViewModels.Account;
+﻿using DutchTreatCore.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using DutchTreatCore.ViewModels.Account;
 
 namespace DutchTreatCore.Controllers
 {
@@ -82,22 +81,20 @@ namespace DutchTreatCore.Controllers
 
                         };
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-                        var credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
-                        // Using Claims |Key | credentials to create token 
-                        var token = new JwtSecurityToken(
-                            _configuration["Token:Issuer"],
-                            _configuration["Token:Audience"],
-                            claims,
-                            expires: DateTime.UtcNow.AddMinutes(60),
-                            signingCredentials: credentials
-                        );
+                        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+                        var token = new JwtSecurityToken(
+                            _configuration["Tokens:Issuer"], // the creator of the token
+                            _configuration["Tokens:Audience"], // who can use the token
+                            claims,
+                            expires: DateTime.UtcNow.AddMonths(20),
+                            signingCredentials: credentials);
                         var results = new
                         {
-                            token= new JwtSecurityTokenHandler().WriteToken(token),
-                            expiration= token.ValidTo
+                            token = new JwtSecurityTokenHandler().WriteToken(token),
+                            expiration = token.ValidTo
                         };
-                        return Created(" ", results);
+                        return Created("", results);
 
                     }
                 }

@@ -11,5 +11,6 @@ namespace DutchTreatCore.Repositories
         IEnumerable<Order> GetAllOrders();
         Order GetOrderById(int id);
         void AddOrder(Order order);
+        IEnumerable<Order> GetAllOrdersByUser(string userName);
     }
 }
